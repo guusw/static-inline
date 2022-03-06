@@ -20,7 +20,7 @@ runs:
   steps:
     - name: configure
       shell: bash
-      run: cmake -B${{inputs.build-folder}} ${cmake-flags}
+      run: cmake -B${{inputs.build-folder}} ${{inputs.cmake-flags}}
     - name: Make
       shell: bash
       run: cmake --build ${{inputs.build-folder}}
