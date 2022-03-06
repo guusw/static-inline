@@ -19,10 +19,13 @@ runs:
   using: "composite"
   steps:
     - name: configure
+      shell: bash
       run: cmake -B${{inputs.build-folder}} ${cmake-flags}
     - name: Make
+      shell: bash
       run: cmake --build ${{inputs.build-folder}}
     - name: Test
+      shell: bash
       run: |
         ${{inputs.build-folder}}/main_ok${{inputs.ext}}
         ${{inputs.build-folder}}/main_broken${{inputs.ext}}
