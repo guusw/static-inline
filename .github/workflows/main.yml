@@ -14,7 +14,8 @@ jobs:
           submodules: true
       - uses: ./.github/actions/build
         with:
-         ext: ".exe"
+          ext: ".exe"
+          cmake-flags: "-DCMAKE_BUILD_TYPE=Debug"
   windows-gcc:
     runs-on: windows-latest
     steps:
