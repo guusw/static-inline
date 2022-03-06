@@ -1,31 +1,30 @@
-name: C/C++ CI
-
+name: C/C++ Workflow
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+  workflow_call:
+    inputs:
+        ext:
+          description: "Binary extension"
+          required: false
+          default:
+          type: string
+        cmake-flags:
+          description: "CMake configure flags to append"
+          required: false
+          default:
+          type: string
+        build-folder:
+          description: "Build folder name"
+          required: false
+          default: build
+          type: string
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        OS: ["ubuntu-latest", "windows-latest", "macos-latest"]
-        include:
-          - os: windows-latest
-          - os: ubuntu-latest
-          - os: macos-latest
-    runs-on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - name: configure
-      run: cmake -Bbuild
-    - name: Make
-      run: cmake --build build
-    - name: Test
-      run: |
-        build/main_ok
-        build/main_broken
+      - name: configure
+        run: cmake -B${{inputs.build-folder}} ${cmake-flags}
+      - name: Make
+        run: cmake --build ${{inputs.build-folder}}
+      - name: Test
+        run: |
+          ${{inputs.build-folder}}/main_ok${{inputs.ext}}
+          ${{inputs.build-folder}}/main_broken${{inputs.ext}}

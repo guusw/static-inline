@@ -1,0 +1,73 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  windows-msvc:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - build:
+        uses: ./.github/workflows/c-cpp.yml
+        with:
+          ext: ".exe"
+  windows-gcc:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Set up MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          release: false
+          path-type: inherit
+          install: >-
+            base-devel
+            mingw-w64-${{ matrix.arch }}-toolchain
+            mingw-w64-${{ matrix.arch }}-cmake
+            wget
+      - build:
+        uses: ./.github/workflows/c-cpp.yml
+        with:
+          ext: ".exe"
+          cmake-flags: "-DCMAKE_CXX_COMPILER=gcc"
+  ubuntu-gcc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - build:
+        uses: ./.github/workflows/c-cpp.yml
+        with:
+          cmake-flags: "-DCMAKE_CXX_COMPILER=gcc"
+  ubuntu-clang:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Set up dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install build-essential git cmake wget clang
+      - build:
+        uses: ./.github/workflows/c-cpp.yml
+        with:
+          cmake-flags: "-DCMAKE_CXX_COMPILER=clang"
+  osx-apple-clang:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - build:
+        uses: ./.github/workflows/c-cpp.yml
