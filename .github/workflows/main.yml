@@ -12,8 +12,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - build:
-        uses: ./.github/workflows/c-cpp.yml
+      - uses: ./.github/workflows/c-cpp.yml
         with:
           ext: ".exe"
   # windows-gcc:
