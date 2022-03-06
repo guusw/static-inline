@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - uses: ./.github/workflows/c-cpp.yml
+      - uses: ./.github/workflows/build
         with:
           ext: ".exe"
   # windows-gcc:
@@ -33,7 +33,7 @@ jobs:
   #           mingw-w64-${{ matrix.arch }}-cmake
   #           wget
   #     - build:
-  #       uses: ./.github/workflows/c-cpp.yml
+  #       uses: ./.github/workflows/build
   #       with:
   #         ext: ".exe"
   #         cmake-flags: "-DCMAKE_CXX_COMPILER=gcc"
@@ -44,7 +44,7 @@ jobs:
   #       with:
   #         submodules: true
   #     - build:
-  #       uses: ./.github/workflows/c-cpp.yml
+  #       uses: ./.github/workflows/build
   #       with:
   #         cmake-flags: "-DCMAKE_CXX_COMPILER=gcc"
   # ubuntu-clang:
@@ -58,7 +58,7 @@ jobs:
   #         sudo apt-get -y update
   #         sudo apt-get -y install build-essential git cmake wget clang
   #     - build:
-  #       uses: ./.github/workflows/c-cpp.yml
+  #       uses: ./.github/workflows/build
   #       with:
   #         cmake-flags: "-DCMAKE_CXX_COMPILER=clang"
   # osx-apple-clang:
@@ -68,4 +68,4 @@ jobs:
   #       with:
   #         submodules: true
   #     - build:
-  #       uses: ./.github/workflows/c-cpp.yml
+  #       uses: ./.github/workflows/build
