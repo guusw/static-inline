@@ -3,6 +3,7 @@ project(cpp_sandbox)
 add_subdirectory(Catch2)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR})
 
 add_executable(main_broken main_broken.cpp)
 target_compile_features(main_broken PUBLIC cxx_std_20)
